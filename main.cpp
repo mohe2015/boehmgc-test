@@ -1,4 +1,5 @@
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 #define GC_INCLUDE_NEW
@@ -8,8 +9,10 @@
 #include <gc/gc_allocator.h>
 */
 
-int main() {
-    void* test = malloc(1024);
+int main(int argc, char** argv) {
+    char * buffer = (char*)malloc(1024);
+    sprintf(buffer, "%d", argc);
+    printf("%s",buffer);
 
     return 0;
 }

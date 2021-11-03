@@ -12,7 +12,8 @@
             src = ./.;
             buildInputs = [ pkgs.boehmgc ];
             buildPhase = ''
-                clang++ -fsanitize=address -o test main.cpp
+                clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -c main.cpp
+                clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -o test main.o
             '';
             installPhase = ''
                 cp test $out
