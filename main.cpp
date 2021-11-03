@@ -7,7 +7,7 @@
 #include <gc/gc_cpp.h>
 #include <gc/gc_allocator.h>
 
-struct LoL {
+struct LoL : gc {
     int test;
 };
 
