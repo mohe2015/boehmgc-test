@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <vector>
 
 #define GC_INCLUDE_NEW
 #define GC_DEBUG
@@ -10,6 +12,9 @@
 struct LoL : gc {
     int test;
 };
+
+// maybe this in a shared lib?
+static std::vector<std::string> test({"hello, it's me"});
 
 int main(int argc, char** argv) {
     LoL *array = new LoL[100];
