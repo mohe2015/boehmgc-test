@@ -30,16 +30,8 @@ struct RegisterPrimOp : gc
 struct Value : gc
 {
 public:
-    union// : gc
-    {
-        int integer;
-        RegisterPrimOp::Info * primOp;
-    };
-
-    inline void mkInt(int i)
-    {
-        integer = i;
-    }
+    
+    RegisterPrimOp::Info * primOp;
 
     inline void mkPrimOp(RegisterPrimOp::Info* i)
     {
