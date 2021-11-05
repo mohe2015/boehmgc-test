@@ -4,7 +4,7 @@
 #include <vector>
 
 int libtest();
-/*
+
 #define GC_INCLUDE_NEW
 #define GC_DEBUG
 #include <gc/gc.h>
@@ -13,7 +13,7 @@ int libtest();
 
 struct LoL : gc {
     int test;
-};*/
+};
 
 // maybe this in a shared lib?
 static std::vector<std::string> test({"hello, it's me"});
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     printf ("We got nothing!\n");
 #endif
 
-    //GC_gcollect();
+    GC_gcollect();
 
     return 0;
 }

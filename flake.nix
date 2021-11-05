@@ -8,6 +8,7 @@
       };
     in {
         # nix -L build && ASAN_OPTIONS=fast_unwind_on_malloc=0 ./result/test
+        # (genericBuild) && ./outputs/out/test
         defaultPackage."x86_64-linux" = pkgs.llvmPackages_13.stdenv.mkDerivation {
             name = "test";
             src = ./.;
@@ -16,9 +17,9 @@
             dontStrip = true;
             buildPhase = ''
 clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -c lib.cpp
-clang++ -shared -g -O1 -fsanitize=address -o liblib.so lib.o
+clang++ -shared -g -O1 -fsanitize=address -lgc -lgccpp -o liblib.so lib.o
 clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -c main.cpp
-clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -L$PWD -Wl,-rpath=$out -llib -o test main.o #  -lgc -lgccpp
+clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -L$PWD -Wl,-rpath=$PWD -llib -lgc -lgccpp -o test main.o
             '';
             installPhase = ''
                 mkdir -p $out

@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
-/*
+
 #define GC_INCLUDE_NEW
 #define GC_DEBUG
 #include <gc/gc.h>
 #include <gc/gc_cpp.h>
 #include <gc/gc_allocator.h>
-*/
+
 
 // I think this is a false flag thing from the place where they fake-copy them
-struct RegisterPrimOp
+struct RegisterPrimOp : gc
 {
     struct Info
     {
@@ -24,10 +24,10 @@ struct RegisterPrimOp
     typedef std::vector<Info> PrimOps;
     static PrimOps * primOps;
 
-    RegisterPrimOp(Info && info);
+    RegisterPrimOp(Info info);
 };
 
-struct Value// : gc
+struct Value : gc
 {
 public:
     union// : gc
@@ -49,7 +49,7 @@ public:
 
 RegisterPrimOp::PrimOps * RegisterPrimOp::primOps;
 
-RegisterPrimOp::RegisterPrimOp(Info && info)
+RegisterPrimOp::RegisterPrimOp(Info info)
 {
     if (!primOps) primOps = new PrimOps;
     primOps->push_back(std::move(info));
