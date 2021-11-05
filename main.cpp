@@ -16,7 +16,7 @@ struct LoL : gc {
 };
 
 // maybe this in a shared lib?
-static std::vector<std::string> test({"hello, it's me"});
+static std::vector<std::string, gc_allocator<std::vector<std::string>>> test({"hello, it's me"});
 
 int main(int argc, char** argv) {
     //LoL *array = new LoL[100];
