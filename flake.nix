@@ -9,10 +9,10 @@
     in {
         # nix -L build && ASAN_OPTIONS=fast_unwind_on_malloc=0 ./result/test
         # (genericBuild) && ./outputs/out/test
-        defaultPackage."x86_64-linux" = pkgs.llvmPackages_13.stdenv.mkDerivation {
+        defaultPackage."x86_64-linux" = pkgs.stdenv.mkDerivation { # llvmPackages_13
             name = "test";
             src = ./.;
-            nativeBuildInputs = [ pkgs.llvm_13 ];
+            nativeBuildInputs = [ pkgs.bashInteractive ]; # pkgs.llvm_13
             buildInputs = [ 
 
             ((pkgs.boehmgc.override {
@@ -37,12 +37,6 @@
 
             ];
             dontStrip = true;
-            buildPhase = ''
-clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -c lib.cpp
-clang++ -shared -g -O1 -fsanitize=address -lgc -lgccpp -o liblib.so lib.o
-clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -c main.cpp
-clang++ -Wall -Wextra -fno-omit-frame-pointer -g -O1 -fsanitize=address -L$PWD -Wl,-rpath=$out -llib -lgc -lgccpp -o test main.o
-            '';
             installPhase = ''
                 mkdir -p $out
                 cp liblib.so $out/
