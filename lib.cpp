@@ -27,6 +27,26 @@ struct RegisterPrimOp
     RegisterPrimOp(Info && info);
 };
 
+struct Value// : gc
+{
+public:
+    union// : gc
+    {
+        int integer;
+        RegisterPrimOp::Info * primOp;
+    };
+
+    inline void mkInt(int i)
+    {
+        integer = i;
+    }
+
+    inline void mkPrimOp(RegisterPrimOp::Info* i)
+    {
+        primOp = i;
+    }
+};
+
 RegisterPrimOp::PrimOps * RegisterPrimOp::primOps;
 
 RegisterPrimOp::RegisterPrimOp(Info && info)
@@ -47,6 +67,17 @@ static RegisterPrimOp test2({
 int libtest() {
     //int *array = new int[100];
     //printf("%d",array[0]);
+
+    Value v;
+
+    v.mkPrimOp(new RegisterPrimOp::Info({
+        .name = "__pathExists",
+        .args = {"path","flsdfhdsifsf","hdsflisdhfdsif","dslfihsfldfhs"},
+        .doc = R"(
+        Return `true` if the path *path* exists at evaluation time, and
+        `false` otherwise.
+        )",
+    }));
 
     return 7;
 }
