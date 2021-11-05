@@ -9,10 +9,10 @@
 #include <gc/gc_cpp.h>
 #include <gc/gc_allocator.h>
 
-struct Info
+struct Info : gc
 {
     std::string name;
-    std::vector<std::string, gc_allocator<std::vector<std::string>>> args; // mae vector is notf gc able and that's the problem
+    std::vector<std::string, gc_allocator<std::string>> args; // mae vector is notf gc able and that's the problem
     size_t arity = 0;
     const char * doc;
 };
