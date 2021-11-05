@@ -30,6 +30,12 @@
 #ifndef _GLIBCXX_CXX_ALLOCATOR_H
 #define _GLIBCXX_CXX_ALLOCATOR_H 1
 
+#define GC_INCLUDE_NEW
+#define GC_DEBUG
+#include <gc/gc.h>
+#include <gc/gc_cpp.h>
+#include <gc/gc_allocator.h>
+
 #include <ext/new_allocator.h>
 
 #if __cplusplus >= 201103L
@@ -45,11 +51,11 @@ namespace std
    *  @tparam  _Tp  Type of allocated object.
     */
   template<typename _Tp>
-    using __allocator_base = __gnu_cxx::new_allocator<_Tp>;
+    using __allocator_base = gc_allocator<_Tp>;
 }
 #else
 // Define new_allocator as the base class to std::allocator.
-# define __allocator_base  __gnu_cxx::new_allocator
+# define __allocator_base  gc_allocator::new_allocator
 #endif
 
 #if defined(__SANITIZE_ADDRESS__) && !defined(_GLIBCXX_SANITIZE_STD_ALLOCATOR)
